@@ -1,7 +1,7 @@
 import { Component } from 'react';
 // import { Formik, Form, Field, ErrorMessage } from 'formik';
 // import * as yup from 'yup';
-import styles from '../FormName/FormName.module.css';
+import styles from '../GetNameForm/GetNameForm.module.css';
 
 // const schema = yup.object().shape({
 //     name: yup.string().min(6).max(25).required(),
