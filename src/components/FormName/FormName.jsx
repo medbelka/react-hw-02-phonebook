@@ -1,51 +1,54 @@
-import React, { Component } from 'react';
-import { nanoid } from 'nanoid';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import * as yup from 'yup';
+// import { nanoid } from 'nanoid';
 import styles from '../FormName/FormName.module.css';
 
-class FormName extends Component {
-    state = {
-        name: '',
-        // id: '',
-    };
+const schema = yup.object().shape({
+    name: yup.string().min(6).max(25).required(),
+})
 
-    nameId = nanoid();
-    handleChange = e => {
-        const { name, value } = e.currentTarget;
-        this.setState({ [name]: value });
-    }
+const initialValues = {
+    name: '',
+}
 
-    handleSubmit = e => {
-        e.preventDefault();
-        this.props.onSubmit(this.state);
-        this.reset();
+export const FormName = () => {
+    // nameId = nanoid();
+    // const handleChange = e => {
+    //     const { name, value } = e.currentTarget;
+    //     this.setState({ [name]: value });
+    // }
+
+    const handleSubmit = (values, { resetForm }) => {
+        // e.preventDefault();
+        // this.props.onSubmit(this.state);
+        resetForm();
+        console.log(values);
+        // this.props.onSubmit(values);
         }
-    reset = () => {
-        this.setState ({name: ''})
-    }
 
-render() {
     return (
-        <form
-        className={styles.FormBox} 
-        onSubmit={this.handleSubmit}>
-            <label 
-            className={styles.Label}
-            htmlFor={this.nameId}>
+        <Formik initialValues={initialValues}
+                validationSchema={schema}
+                onSubmit={handleSubmit}
+                >
+        {({ handleChange, isSubmitting, values }) => (
+            <Form className={styles.FormBox}> 
+            <label className={styles.Label}>
                 Name
-            <input
-                className={styles.InputField}
-                type="text"
-                name="name"
-                value={this.state.name}
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                onChange={this.handleChange}
-                required
-            />
+                <Field
+                    className={styles.InputField}
+                    type="text"
+                    name="name"
+                    value={values.name}
+                    pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                    title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                    onChange={handleChange('name')}
+                    required
+                />
             </label>
-            <button className={styles.SubmitButton}>Add contact</button>
-        </form>
+            <ErrorMessage name="name" component="div"/>
+            <button type="submit" disabled={isSubmitting} className={styles.SubmitButton}>Add contact</button>
+        </Form> )}
+        </Formik>
     )
 }
-}
-export default FormName;

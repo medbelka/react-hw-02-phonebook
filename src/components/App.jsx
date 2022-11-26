@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // import { nanoid } from 'nanoid';
-import FormName from 'components/FormName/FormName';
+import { FormName } from 'components/FormName/FormName';
 import { ContactsList } from 'components/ContactsList/ContactsList';
 
 class App extends Component {
@@ -10,12 +10,12 @@ class App extends Component {
   }
 
   addContact = name => {
-    // const contact = {
-    //       id: nanoid(),
-    //       name
-    //       }
-    // this.state(({contacts}) => ({contacts: [contact, ...contacts]
-    //   }))
+    const contact = {
+          // id: nanoid(),
+          name
+          }
+          this.state(({contacts}) => ({contacts: [contact, ...contacts]
+      }))
     console.log(name);
   }
 
@@ -26,7 +26,7 @@ render () {
           <FormName onSubmit={this.addContact}/>
           <h2>Contacts</h2>
           <div>
-          {{[this.state.contacts] : []}? 'There is no contacts yet' : <ContactsList contacts={this.state}/>}
+          {{[this.state.contacts] : []}? 'There is no contacts yet' : <ContactsList contacts={this.state.name}/>}
           </div>
         </div>
       );
