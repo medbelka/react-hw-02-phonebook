@@ -1,33 +1,44 @@
 import React, { Component } from 'react';
-// import { nanoid } from 'nanoid';
-import { FormName } from 'components/FormName/FormName';
-import { ContactsList } from 'components/ContactsList/ContactsList';
+import { nanoid } from 'nanoid';
+import GetNameForm from '../components/GetNameForm/GetNameForm';
+import { Contacts } from '../components/Contacts/Contacts';
 
 class App extends Component {
   state = {
-    contacts: [],
-    
+    contacts: [
+      {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+      {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+      {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+      {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+    ],
+    filter: '',
+    }
+
+  deleteContact = (contactId) => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId)
+    }))
   }
 
-  addContact = name => {
-    const contact = {
-          // id: nanoid(),
-          name
-          }
-          this.state(({contacts}) => ({contacts: [contact, ...contacts]
-      }))
-    console.log(name);
+  addContact = (name, number) => {
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    }
+    this.setState(prevState => ({
+      contacts: [newContact, ...prevState.contacts]
+    }))
   }
 
 render () {
+  const { contacts } = this.state;
   return (
         <div>
           <h1>Phonebook</h1>
-          <FormName onSubmit={this.addContact}/>
+          <GetNameForm onSubmit={this.addContact}/>
           <h2>Contacts</h2>
-          <div>
-          {{[this.state.contacts] : []}? 'There is no contacts yet' : <ContactsList contacts={this.state.name}/>}
-          </div>
+          <Contacts contacts={ contacts } onDeleteContact={this.deleteContact} />
         </div>
       );
     }

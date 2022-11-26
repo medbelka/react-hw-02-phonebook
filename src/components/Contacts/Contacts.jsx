@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import styles from '../Contacts/Contacts.module.css'
 
 export const Contacts = ({ contacts, onDeleteContact }) => {
@@ -15,7 +15,7 @@ export const Contacts = ({ contacts, onDeleteContact }) => {
     )
 }
 
-Contacts.propTypes = {
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-}
+// Contacts.propTypes = {
+//     name: PropTypes.string.isRequired,
+//     number: PropTypes.string.isRequired,
+// }
