@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
+import Filter from '../components/Filter/Filter';
 import GetNameForm from '../components/GetNameForm/GetNameForm';
 import { Contacts } from '../components/Contacts/Contacts';
+import styles from '../components/App.module.css';
 
 class App extends Component {
   state = {
@@ -31,14 +33,30 @@ class App extends Component {
     }))
   }
 
+  changeFilter = e => {
+    this.setState({filter: e.currentTarget.value})
+  }
+
+  getVisibleContacts = () =>{
+    const { filter, contacts } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+      );
+  }
+
+
 render () {
-  const { contacts } = this.state;
+  const { filter } = this.state;
+  const visibleContacts = this.getVisibleContacts();
   return (
-        <div>
+        <div className={styles.container}>
           <h1>Phonebook</h1>
           <GetNameForm onSubmit={this.addContact}/>
+          <Filter value={filter} onChange={this.changeFilter}/>
           <h2>Contacts</h2>
-          <Contacts contacts={ contacts } onDeleteContact={this.deleteContact} />
+          <Contacts contacts={ visibleContacts } onDeleteContact={this.deleteContact} />
         </div>
       );
     }
