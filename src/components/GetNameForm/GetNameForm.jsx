@@ -20,9 +20,11 @@ class GetNameForm extends Component {
     handleChangeNumber = e => {
         this.setState({ number : e.currentTarget.value });
     };
+    
 
     handleSubmit = e => {
         e.preventDefault();
+
         this.props.onSubmit(this.state.name, this.state.number)
         this.setState({name: ''})
         this.setState({number: ''})

@@ -12,18 +12,10 @@ const initialValues = {
 }
 
 export const FormName = () => {
-    // nameId = nanoid();
-    // const handleChange = e => {
-    //     const { name, value } = e.currentTarget;
-    //     this.setState({ [name]: value });
-    // }
 
     const handleSubmit = (values, { resetForm }) => {
-        // e.preventDefault();
-        // this.props.onSubmit(this.state);
         resetForm();
         console.log(values);
-        // this.props.onSubmit(values);
         }
 
     return (

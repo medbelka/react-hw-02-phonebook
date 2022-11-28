@@ -22,16 +22,15 @@ class App extends Component {
     }))
   }
 
-  // createButtonAlert = (name) =>
-  //   Alert.alert(
-  //     "Warning",
-  //     `${name} is already in contacts`,
-  //     [
-  //       { text: "OK", onPress: () => console.log("OK Pressed") }
-  //     ]
-  //   );
-
   addContact = (name, number) => {
+    const existingContact = this.state.contacts.find(contact=>
+      contact.name === name )
+      console.log(existingContact)
+    if (existingContact) {
+      console.log("if work")
+      alert(`${name} is already in contacts`)
+    }
+      else {
       const newContact = {
         id: nanoid(),
         name,
@@ -39,7 +38,7 @@ class App extends Component {
       }
       this.setState(prevState => ({
         contacts: [newContact, ...prevState.contacts]
-      }))
+      })) }
   }
 
   changeFilter = e => {
