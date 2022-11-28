@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { nanoid } from 'nanoid';
 import Filter from '../components/Filter/Filter';
-import GetNameForm from '../components/GetNameForm/GetNameForm';
+import { GetNameForm } from '../components/GetNameForm/GetNameForm';
 import { Contacts } from '../components/Contacts/Contacts';
 import styles from '../components/App.module.css';
 
@@ -25,9 +25,7 @@ class App extends Component {
   addContact = (name, number) => {
     const existingContact = this.state.contacts.find(contact=>
       contact.name === name )
-      console.log(existingContact)
     if (existingContact) {
-      console.log("if work")
       alert(`${name} is already in contacts`)
     }
       else {
@@ -39,6 +37,11 @@ class App extends Component {
       this.setState(prevState => ({
         contacts: [newContact, ...prevState.contacts]
       })) }
+  }
+
+  handleSubmit = (values, {resetForm}) => {
+    this.addContact(values.name, values.number)
+    resetForm()
   }
 
   changeFilter = e => {
@@ -54,14 +57,13 @@ class App extends Component {
       );
   }
 
-
 render () {
   const { filter } = this.state;
   const visibleContacts = this.getVisibleContacts();
   return (
         <div className={styles.container}>
           <h1>Phonebook</h1>
-          <GetNameForm onSubmit={this.addContact}/>
+          <GetNameForm onSubmit={this.handleSubmit}/>
           <Filter value={filter} onChange={this.changeFilter}/>
           <h2>Contacts</h2>
           <Contacts contacts={ visibleContacts } onDeleteContact={this.deleteContact} />
